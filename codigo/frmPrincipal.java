@@ -111,30 +111,115 @@ public class frmPrincipal extends javax.swing.JFrame {
             Reader leer = new BufferedReader(new FileReader(chooser.getSelectedFile()));
             Lexer lexer = new Lexer(leer);
             
-            String resultado = "";
+            String resultadoDeTokes = "";
+            String resultadoDePatrones = "";
+            
+            int operadoresAritmetico = 0;
+            int operadoresAsignacion = 0;
+            int identificadores = 0;
+            int operacionesAgrupacion = 0;
+            int palabrasReservadas = 0;
+            int simbolosDePuntuacion = 0;
+            int operadoresDeComparacion = 0;
+            int cadena = 0;
+            int numeros = 0;
+            int decimales = 0;
+            int logicos = 0;
+            int booleanos = 0;
+            int incrementales = 0;
+            int errores = 0;
+            int indefinido = 0;
+            
             
             while (true) {                
             
                 Tokens tokens = lexer.yylex();
                 //si es la ultima linea del token, realiza la escritura final
                 if (tokens == null){
-                    resultado += "FIN";
-                    txtResultado.setText(resultado);
+                    resultadoDeTokes += "FIN";
+                    txtResultado.setText(resultadoDeTokes);
+                    txtResultado1.setText(resultadoDePatrones);
                     return;
                 }
                 
                 switch (tokens) {
                     //se valida segun el tipo de token, para retornar una respuesta (aqui esta de forma muy general)
                     case ERROR:
-                        resultado += "NO DEFIINDO\n";
+                        resultadoDeTokes += "Error de token\n";
+                        resultadoDePatrones += "(N , N-"+errores+")\n";
+                        errores++;
                         break;
                     case INICIO:
                         break;
-                    case Identificador: case Numero: case Reservadas:
-                        resultado += lexer.lexeme + ": Es " + tokens + "\n";
+                    case opSuma: case opResta: case opMultiplicacion: case opDivision:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(A , A-"+operadoresAritmetico+")\n";
+                        operadoresAritmetico++;
+                        break;
+                    case opIgual:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(B , B-"+operadoresAsignacion+")\n";
+                        operadoresAsignacion++;
+                        break;
+                    case Identificador:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(C , C-"+identificadores+")\n";
+                        identificadores++;
+                        break;
+                    case aParentesis: case cParentesis: case aLlave: case cLlave: case aCorchete: case cCorchete:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(D , D-"+operacionesAgrupacion+")\n";
+                        operacionesAgrupacion++;
+                        break;
+                    case Reservadas:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(E , E-"+palabrasReservadas+")\n";
+                        palabrasReservadas++;
+                        break;
+                    case finLine:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(F , F-"+simbolosDePuntuacion+")\n";
+                        simbolosDePuntuacion++;
+                        break;
+                    case sigMayor: case sigMenor: case mayorIgual: case menorIgual: case comparacion: case diferente:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(G , G-"+operadoresDeComparacion+")\n";
+                        operadoresDeComparacion++;
+                        break;
+                    case cadena:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(H , H-"+cadena+")\n";
+                        cadena++;
+                        break;
+                    case Numero:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(I , I-"+numeros+")\n";
+                        numeros++;
+                        break;
+                    case Decimal:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(J , J-"+decimales+")\n";
+                        decimales++;
+                        break;
+                    case opOr: case opAnd:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(K , K-"+logicos+")\n";
+                        logicos++;
+                        break;
+                    case booleano:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(L , L-"+booleanos+")\n";
+                        booleanos++;
+                        break;
+                    case incremento: case decremento: case yoMas: case yoMenos:
+                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
+                        resultadoDePatrones += "(M , M-"+incrementales+")\n";
+                        incrementales++;
                         break;
                     default:
-                        resultado +=  lexer.lexeme + " Token " + tokens + "\n";
+                        resultadoDeTokes +=  lexer.lexeme + " Token " + tokens + " no definido \n";
+                        resultadoDePatrones += "(O , O-"+indefinido+")\n";
+                        indefinido++;
                         break;
                 }
             }

@@ -75,8 +75,8 @@ wdh_include
 "]" {lexeme=yytext(); return cCorchete;}
 
 //definicion de operadores logicos
-"or" {lexeme=yytext(); return cCorchete;}
-"and" {lexeme=yytext(); return cCorchete;}
+"or" {lexeme=yytext(); return opOr;}
+"and" {lexeme=yytext(); return opAnd;}
 
 //definicion del fin de cada linea
 ";" {lexeme=yytext(); return finLine;}

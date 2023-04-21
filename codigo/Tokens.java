@@ -39,5 +39,7 @@ public enum Tokens {
     cLlave, //}
     aCorchete, //[
     cCorchete, //]
-    booleano, //verdader|falso
+    booleano,
+    opOr,
+    opAnd//verdader|falso
 }
