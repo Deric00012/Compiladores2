@@ -11,14 +11,33 @@ package codigo;
 //se enumeran TODOS los tokens que seran utilizados
 public enum Tokens {
     Reservadas,
-    opIgual,
-    opSuma,
-    opResta,
-    opMultiplicacion,
-    opDivision,
-    Identificador,
-    Numero,
-    ERROR,
-    INICIO,
-    mayor
+    opIgual, //=
+    opSuma, //+
+    opResta, //-
+    opMultiplicacion, //*
+    opDivision, // /
+    Identificador, // <algo>
+    Numero, //123
+    Decimal, //123.456
+    ERROR, // .
+    INICIO, //
+    sigMayor, //>
+    sigMenor, //<
+    mayorIgual, //>=
+    menorIgual, //<=
+    comparacion, //==
+    diferente, //!=
+    incremento, //++
+    decremento, //--
+    yoMas, //=+
+    yoMenos, //=-
+    cadena, // /algo/
+    finLine,// ;
+    aParentesis, // (
+    cParentesis, // )
+    aLlave, // {
+    cLlave, //}
+    aCorchete, //[
+    cCorchete, //]
+    booleano, //verdader|falso
 }

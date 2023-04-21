@@ -16,7 +16,7 @@ public class Principal {
     public static void main(String[] args) {
         
         //Main apunta a la ruta del archivo flex para ser generado
-        String ruta = "C:/Users/Usuario dell/Downloads/AnalizadorJava/AnalizadorJava/src/codigo/Lexer.flex";
+        String ruta = "C:/Users/Usuario dell/Desktop/ProyectoCompiladores/AnalizadorJava/src/codigo/Lexer.flex";
         generarLexer(ruta);
     }
     
