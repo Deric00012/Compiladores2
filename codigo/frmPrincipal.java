@@ -14,6 +14,7 @@ import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,7 +28,6 @@ public class frmPrincipal extends javax.swing.JFrame {
     public frmPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
     }
 
     /**
@@ -40,11 +40,9 @@ public class frmPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btnAnalizar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtResultado = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtResultado1 = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,15 +53,16 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        txtResultado.setColumns(20);
-        txtResultado.setRows(5);
-        jScrollPane1.setViewportView(txtResultado);
-
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario dell\\Desktop\\ProyectoCompiladores\\WhatsApp Image 2023-04-20 at 22.58.25.jpeg")); // NOI18N
 
-        txtResultado1.setColumns(20);
-        txtResultado1.setRows(5);
-        jScrollPane2.setViewportView(txtResultado1);
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+            },
+            new String [] {
+                "Caracter", "Token", "Valor"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,9 +72,8 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane4))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(326, 326, 326)
@@ -93,9 +91,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addGap(59, 59, 59)
                         .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -103,16 +99,14 @@ public class frmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarActionPerformed
-        
+    DefaultTableModel modelo =  (DefaultTableModel) jTable2.getModel();
     JFileChooser chooser = new JFileChooser();
     chooser.showOpenDialog(null);
         
         try {
             Reader leer = new BufferedReader(new FileReader(chooser.getSelectedFile()));
             Lexer lexer = new Lexer(leer);
-            
-            String resultadoDeTokes = "";
-            String resultadoDePatrones = "";
+
             
             int operadoresAritmetico = 0;
             int operadoresAsignacion = 0;
@@ -136,90 +130,73 @@ public class frmPrincipal extends javax.swing.JFrame {
                 Tokens tokens = lexer.yylex();
                 //si es la ultima linea del token, realiza la escritura final
                 if (tokens == null){
-                    resultadoDeTokes += "FIN";
-                    txtResultado.setText(resultadoDeTokes);
-                    txtResultado1.setText(resultadoDePatrones);
+                    modelo.addRow(new Object[]{"FIN","FIN","FIN"});
                     return;
                 }
                 
                 switch (tokens) {
                     //se valida segun el tipo de token, para retornar una respuesta (aqui esta de forma muy general)
                     case ERROR:
-                        resultadoDeTokes += "Error de token\n";
-                        resultadoDePatrones += "(N , N-"+errores+")\n";
                         errores++;
+                        modelo.addRow(new Object[]{"ERROR","Errores","(N , N-"+errores+")"});
                         break;
                     case INICIO:
                         break;
                     case opSuma: case opResta: case opMultiplicacion: case opDivision:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(A , A-"+operadoresAritmetico+")\n";
                         operadoresAritmetico++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Operador Aritmetico","(A , A-"+operadoresAritmetico+")"});
                         break;
                     case opIgual:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(B , B-"+operadoresAsignacion+")\n";
                         operadoresAsignacion++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Asignador","(B , B-"+operadoresAsignacion+")"});
                         break;
                     case Identificador:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(C , C-"+identificadores+")\n";
                         identificadores++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Identificador","(C , C-"+identificadores+")"});
                         break;
                     case aParentesis: case cParentesis: case aLlave: case cLlave: case aCorchete: case cCorchete:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(D , D-"+operacionesAgrupacion+")\n";
                         operacionesAgrupacion++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Operador de agrupacion","(D , D-"+operacionesAgrupacion+")"});
                         break;
                     case Reservadas:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(E , E-"+palabrasReservadas+")\n";
                         palabrasReservadas++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Reservada","(E , E-"+palabrasReservadas+")"});
                         break;
                     case finLine:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(F , F-"+simbolosDePuntuacion+")\n";
                         simbolosDePuntuacion++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Fin Linea","(F , F-"+simbolosDePuntuacion+")"});
                         break;
                     case sigMayor: case sigMenor: case mayorIgual: case menorIgual: case comparacion: case diferente:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(G , G-"+operadoresDeComparacion+")\n";
                         operadoresDeComparacion++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Comparador","(G , G-"+operadoresDeComparacion+")"});
                         break;
                     case cadena:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(H , H-"+cadena+")\n";
                         cadena++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Cadena","(H , H-"+cadena+")"});
                         break;
                     case Numero:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(I , I-"+numeros+")\n";
                         numeros++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Numero","(I , I-"+numeros+")"});
                         break;
                     case Decimal:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(J , J-"+decimales+")\n";
                         decimales++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Decimal","(J , J-"+decimales+")"});
                         break;
                     case opOr: case opAnd:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(K , K-"+logicos+")\n";
                         logicos++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Operador logico","(K , K-"+logicos+")"});
                         break;
                     case booleano:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(L , L-"+booleanos+")\n";
                         booleanos++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Booleano","(L , L-"+booleanos+")"});
                         break;
                     case incremento: case decremento: case yoMas: case yoMenos:
-                        resultadoDeTokes += lexer.lexeme + ": Es " + tokens + "\n";
-                        resultadoDePatrones += "(M , M-"+incrementales+")\n";
                         incrementales++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Incremental","(M , M-"+incrementales+")"});
                         break;
                     default:
-                        resultadoDeTokes +=  lexer.lexeme + " Token " + tokens + " no definido \n";
-                        resultadoDePatrones += "(O , O-"+indefinido+")\n";
                         indefinido++;
+                        modelo.addRow(new Object[]{lexer.lexeme,"Indefinido","(O , O-"+indefinido+")"});
                         break;
                 }
             }
@@ -269,9 +246,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea txtResultado;
-    private javax.swing.JTextArea txtResultado1;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }
