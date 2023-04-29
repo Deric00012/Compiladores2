@@ -42,5 +42,6 @@ public enum Tokens {
     booleano,
     opOr,
     opAnd,//verdader|falso
-    errorIdentificador
+    errorIdentificador,
+    errorEnLinea;
 }

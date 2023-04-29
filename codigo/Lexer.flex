@@ -89,5 +89,5 @@ wdh_include
 [-]?{Digitos}|{Digitos}+ {lexeme=yytext(); return Numero;}
 [-]?{Digitos}*+[.]{Digitos}+ {lexeme=yytext(); return Decimal;}
 (true|false){1} {lexeme=yytext(); return booleano;}
-
+({Letras}|{Digitos})* {lexeme=yytext(); return errorEnLinea;}
  . {lexeme=yytext(); return ERROR;}

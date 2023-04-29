@@ -53,13 +53,11 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario dell\\Desktop\\ProyectoCompiladores\\WhatsApp Image 2023-04-20 at 22.58.25.jpeg")); // NOI18N
-
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
             },
             new String [] {
-                "Caracter", "Token", "Valor"
+                "Linea","Caracter", "Token", "Valor"
             }
         ));
         jScrollPane4.setViewportView(jTable2);
@@ -138,68 +136,68 @@ public class frmPrincipal extends javax.swing.JFrame {
                 
                 switch (tokens) {
                     //se valida segun el tipo de token, para retornar una respuesta (aqui esta de forma muy general)
-                    case ERROR: case errorIdentificador:
+                    case ERROR: case errorIdentificador: case errorEnLinea:
                         errores++;
-                        modelo.addRow(new Object[]{"ERROR en linea "+ ErrorLinea,"Errores","(N , N-"+errores+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,"ERROR en linea "+ ErrorLinea,"Errores","(N , N-"+errores+")"});
                         break;
                     case INICIO:
                         break;
                     case opSuma: case opResta: case opMultiplicacion: case opDivision:
                         operadoresAritmetico++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Operador Aritmetico","(A , A-"+operadoresAritmetico+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Operador Aritmetico","(A , A-"+operadoresAritmetico+")"});
                         break;
                     case opIgual:
                         operadoresAsignacion++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Asignador","(B , B-"+operadoresAsignacion+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Asignador","(B , B-"+operadoresAsignacion+")"});
                         break;
                     case Identificador:
                         identificadores++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Identificador","(C , C-"+identificadores+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Identificador","(C , C-"+identificadores+")"});
                         break;
                     case aParentesis: case cParentesis: case aLlave: case cLlave: case aCorchete: case cCorchete:
                         operacionesAgrupacion++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Operador de agrupacion","(D , D-"+operacionesAgrupacion+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Operador de agrupacion","(D , D-"+operacionesAgrupacion+")"});
                         break;
                     case Reservadas:
                         palabrasReservadas++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Reservada","(E , E-"+palabrasReservadas+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Reservada","(E , E-"+palabrasReservadas+")"});
                         break;
                     case finLine:
                         simbolosDePuntuacion++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Fin Linea","(F , F-"+simbolosDePuntuacion+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Fin Linea","(F , F-"+simbolosDePuntuacion+")"});
                         ErrorLinea++;
                         break;
                     case sigMayor: case sigMenor: case mayorIgual: case menorIgual: case comparacion: case diferente:
                         operadoresDeComparacion++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Comparador","(G , G-"+operadoresDeComparacion+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Comparador","(G , G-"+operadoresDeComparacion+")"});
                         break;
                     case cadena:
                         cadena++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Cadena","(H , H-"+cadena+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Cadena","(H , H-"+cadena+")"});
                         break;
                     case Numero:
                         numeros++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Numero","(I , I-"+numeros+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Numero","(I , I-"+numeros+")"});
                         break;
                     case Decimal:
                         decimales++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Decimal","(J , J-"+decimales+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Decimal","(J , J-"+decimales+")"});
                         break;
                     case opOr: case opAnd:
                         logicos++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Operador logico","(K , K-"+logicos+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Operador logico","(K , K-"+logicos+")"});
                         break;
                     case booleano:
                         booleanos++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Booleano","(L , L-"+booleanos+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Booleano","(L , L-"+booleanos+")"});
                         break;
                     case incremento: case decremento: case yoMas: case yoMenos:
                         incrementales++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Incremental","(M , M-"+incrementales+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Incremental","(M , M-"+incrementales+")"});
                         break;
                     default:
                         indefinido++;
-                        modelo.addRow(new Object[]{lexer.lexeme,"Indefinido","(O , O-"+indefinido+")"});
+                        modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Indefinido","(O , O-"+indefinido+")"});
                         break;
                 }
             }
