@@ -41,5 +41,6 @@ public enum Tokens {
     cCorchete, //]
     booleano,
     opOr,
-    opAnd//verdader|falso
+    opAnd,//verdader|falso
+    errorIdentificador
 }

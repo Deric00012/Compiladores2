@@ -125,6 +125,8 @@ public class frmPrincipal extends javax.swing.JFrame {
             int indefinido = 0;
             
             
+            int ErrorLinea = 1;
+            
             while (true) {                
             
                 Tokens tokens = lexer.yylex();
@@ -136,9 +138,9 @@ public class frmPrincipal extends javax.swing.JFrame {
                 
                 switch (tokens) {
                     //se valida segun el tipo de token, para retornar una respuesta (aqui esta de forma muy general)
-                    case ERROR:
+                    case ERROR: case errorIdentificador:
                         errores++;
-                        modelo.addRow(new Object[]{"ERROR","Errores","(N , N-"+errores+")"});
+                        modelo.addRow(new Object[]{"ERROR en linea "+ ErrorLinea,"Errores","(N , N-"+errores+")"});
                         break;
                     case INICIO:
                         break;
@@ -165,6 +167,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     case finLine:
                         simbolosDePuntuacion++;
                         modelo.addRow(new Object[]{lexer.lexeme,"Fin Linea","(F , F-"+simbolosDePuntuacion+")"});
+                        ErrorLinea++;
                         break;
                     case sigMayor: case sigMenor: case mayorIgual: case menorIgual: case comparacion: case diferente:
                         operadoresDeComparacion++;

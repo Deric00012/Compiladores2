@@ -84,8 +84,10 @@ wdh_include
 
 //definicion de reglas
 [<]{Letras}({Letras}|{Digitos})*[>] {lexeme=yytext(); return Identificador;}
+[<]{Digitos}({Letras}|{Digitos})*[>] {lexeme=yytext(); return errorIdentificador;}
 [/]({Letras}|{Digitos}|[ ])*[/] {lexeme=yytext(); return cadena;}
 [-]?{Digitos}|{Digitos}+ {lexeme=yytext(); return Numero;}
 [-]?{Digitos}*+[.]{Digitos}+ {lexeme=yytext(); return Decimal;}
 (true|false){1} {lexeme=yytext(); return booleano;}
+
  . {lexeme=yytext(); return ERROR;}
