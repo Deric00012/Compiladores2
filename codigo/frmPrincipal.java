@@ -159,6 +159,32 @@ public class frmPrincipal extends javax.swing.JFrame {
                         modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Operador de agrupacion","(D , D-"+operacionesAgrupacion+")"});
                         break;
                     case Reservadas:
+                    case palabraReservadaExit:
+                    case palabraReservadaFuntion:
+                    case palabraReservadaBool:
+                    case palabraReservadaLong:
+                    case palabraReservadaDo:
+                    case palabraReservadaClass:
+                    case palabraReservadaFloat:
+                    case palabraReservadaWhile:
+                    case palabraReservadaSwitch:
+                    case palabraReservadaBreak:
+                    case palabraReservadaConst:
+                    case palabraReservadaDouble:
+                    case palabraReservadaIf:
+                    case palabraReservadaArray:
+                    case palabraReservadaReturn:
+                    case palabraReservadaInt:
+                    case palabraReservadaPrivate:
+                    case palabraReservadaStruct:
+                    case palabraReservadaString:
+                    case palabraReservadaPublic:
+                    case palabraReservadaNew:
+                    case palabraReservadaElse:
+                    case palabraReservadaCase:
+                    case palabraReservadaInclude:
+                    case palabraReservadaVoid:
+                    case palabraReservadaFor:
                         palabrasReservadas++;
                         modelo.addRow(new Object[]{ErrorLinea,lexer.lexeme,"Reservada","(E , E-"+palabrasReservadas+")"});
                         break;

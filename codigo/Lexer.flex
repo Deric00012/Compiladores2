@@ -13,32 +13,34 @@ espacio=[ ,\t,\r,\n]+
 %}
 %%
 //definicion de palabras reservadas
-wdh_int | 
-wdh_double |
-wdh_float |
-wdh_long |
-wdh_bool |
-wdh_string |
-wdh_funtion |
-wdh_return |
-wdh_if |
-wdh_else |
-wdh_array |
-wdh_while |
-wdh_do |
-wdh_switch |
-wdh_case |
-wdh_default |
-wdh_break |
-wdh_for |
-wdh_class |
-wdh_const |
-wdh_void |
-wdh_exit |
-wdh_new |
-wdh_struct |
-wdh_include 
-{lexeme=yytext(); return Reservadas;}
+wdh_int {lexeme=yytext(); return palabraReservadaInt;}
+wdh_double {lexeme=yytext(); return palabraReservadaDouble;}
+wdh_float {lexeme=yytext(); return palabraReservadaFloat;}
+wdh_long {lexeme=yytext(); return palabraReservadaLong;}
+wdh_bool {lexeme=yytext(); return palabraReservadaBool;}
+wdh_string {lexeme=yytext(); return palabraReservadaString;}
+wdh_funtion {lexeme=yytext(); return palabraReservadaFuntion;}
+wdh_return {lexeme=yytext(); return palabraReservadaReturn;}
+wdh_if {lexeme=yytext(); return palabraReservadaIf;}
+wdh_else {lexeme=yytext(); return palabraReservadaElse;}
+wdh_array {lexeme=yytext(); return palabraReservadaArray;}
+wdh_while {lexeme=yytext(); return palabraReservadaWhile;}
+wdh_do {lexeme=yytext(); return palabraReservadaDo;}
+wdh_switch {lexeme=yytext(); return palabraReservadaSwitch;}
+wdh_case {lexeme=yytext(); return palabraReservadaCase;}
+wdh_default {lexeme=yytext(); return palabraReservadaCase;}
+wdh_break {lexeme=yytext(); return palabraReservadaBreak;}
+wdh_for {lexeme=yytext(); return palabraReservadaFor;}
+wdh_class {lexeme=yytext(); return palabraReservadaClass;}
+wdh_const {lexeme=yytext(); return palabraReservadaConst;}
+wdh_void {lexeme=yytext(); return palabraReservadaVoid;}
+wdh_exit {lexeme=yytext(); return palabraReservadaExit;}
+wdh_new {lexeme=yytext(); return palabraReservadaNew;}
+wdh_struct {lexeme=yytext(); return palabraReservadaStruct;}
+wdh_include {lexeme=yytext(); return palabraReservadaInclude;}
+wdh_public {lexeme=yytext(); return palabraReservadaPublic;}
+wdh_private {lexeme=yytext(); return palabraReservadaPrivate;}
+
 
 //definicion de caracteres a ignorar
 {espacio} {/*Ignore*/}
